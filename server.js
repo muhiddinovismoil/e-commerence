@@ -1,0 +1,27 @@
+import express from "express";
+import { application, db } from "./src/config/index.js";
+import { authRoutes } from "./src/routes/index.js";
+import mongoose, { connect } from "mongoose";
+
+const app = express();
+
+app.use(express.json());
+
+try {
+  connect(db.uri);
+  mongoose.connection.on("connected", () => console.log("connected"));
+} catch (error) {
+  mongoose.connection.on("error", (err) => {
+    console.error(err);
+  });
+}
+
+app.use("/auth", authRoutes);
+
+if (application.node_env === "development") {
+  console.log("DEVELOPMENT");
+}
+
+app.listen(application.port, () => {
+  console.log(`server is running on port ${application.port}`);
+});
