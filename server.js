@@ -1,6 +1,10 @@
 import express from "express";
 import { application, db } from "./src/config/index.js";
-import { authRoutes } from "./src/routes/index.js";
+import {
+  authRoutes,
+  categoryRoutes,
+  productRoutes,
+} from "./src/routes/index.js";
 import mongoose, { connect } from "mongoose";
 
 const app = express();
@@ -17,6 +21,21 @@ try {
 }
 
 app.use("/auth", authRoutes);
+app.use("/category", categoryRoutes);
+app.use("/product", productRoutes);
+
+app.use((err, req, res, next) => {
+  console.error(err.message);
+  res.status(500).send("Something broke!");
+});
+// app.use((err, res, req , next) => {
+
+//   if (err) {
+//     return res.status(404).send(err.message);
+//   }
+
+//   return res.status(404).send("UZIRASIZ!");
+// });
 
 if (application.node_env === "development") {
   console.log("DEVELOPMENT");
