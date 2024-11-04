@@ -13,5 +13,7 @@ authRoutes.get("/register", authGetRegisterCon);
 authRoutes.post("/login", authLoginCon);
 authRoutes.get("/login", authGetLoginCon);
 authRoutes.get("/me", (req, res) => {
+  console.log("Cookies: ", req.cookies);
+
   res.send("ME");
 });

@@ -35,13 +35,14 @@ export const authLoginCon = async (req, res, next) => {
       email: 1,
       password: 1,
     });
-    
+
     if (!user) return res.send("user not found!");
 
     const isEqual = await user.compare(password);
 
     if (!isEqual) return res.send("Email or password is not valid!");
 
+    res.cookie('cart', { items: [1, 2, 3] })
     res.send({
       message: "loggedIn",
       data: user,

@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import mongoose, { connect } from "mongoose";
-import path from "node:path"
+import path from "node:path";
+import cookieParser from "cookie-parser";
 import { application, db } from "./src/config/index.js";
 import { authRoutes } from "./src/routes/index.js";
 
@@ -18,7 +19,11 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/static", express.static(path.join(import.meta.dirname, "src", "public")));
+app.use(cookieParser());
+app.use(
+  "/static",
+  express.static(path.join(import.meta.dirname, "src", "public"))
+);
 
 try {
   connect(db.uri);
