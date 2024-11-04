@@ -1,4 +1,6 @@
+import path from "node:path";
 import { User } from "../models/index.js";
+
 export const authRegisterCon = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -16,7 +18,10 @@ export const authRegisterCon = async (req, res, next) => {
 
     await user.save();
 
-    res.send(user);
+    res.send({
+      message: "created",
+      data: user,
+    });
   } catch (error) {
     next(error);
   }
@@ -30,14 +35,38 @@ export const authLoginCon = async (req, res, next) => {
       email: 1,
       password: 1,
     });
+    
     if (!user) return res.send("user not found!");
 
     const isEqual = await user.compare(password);
 
     if (!isEqual) return res.send("Email or password is not valid!");
 
-    res.send(user);
+    res.send({
+      message: "loggedIn",
+      data: user,
+    });
   } catch (error) {
+  
     next(error);
   }
+};
+
+export const authGetRegisterCon = (req, res, next) => {
+  const registerHtmlPath = path.join(
+    process.cwd(),
+    "src",
+    "public",
+    "register.html"
+  );
+  console.log(registerHtmlPath);
+
+  res.sendFile(registerHtmlPath);
+};
+
+export const authGetLoginCon = (req, res, next) => {
+  const loginHtmlPath = path.join(process.cwd(), "src", "public", "login.html");
+  console.log(loginHtmlPath);
+
+  res.sendFile(loginHtmlPath);
 };

@@ -33,13 +33,21 @@ fromElement.addEventListener("submit", async (e) => {
     body: JSON.stringify(data),
   });
 
-  if(!res.ok){
-    alert("ERROR")
-    return
+  if (!res.ok) {
+    alert("ERROR");
+    return;
   }
 
+  const resData = await res.json();
+  console.log(resData);
+  if(resData.message ==="created"){
+    // window.location.href "http://localhost:4000/auth/login"    
+    window.open("http://localhost:4000/auth/login")    
+
+  }
 
   // const data = new FormData(e.target);
+
   // console.log(data);
 
   // const formObject = Object.fromEntries(data.entries());
