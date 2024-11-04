@@ -9,7 +9,10 @@ export const authRegisterCon = async (req, res, next) => {
       return res.send("Email already taken");
     }
 
+    req.body.full_name = req.body.fullName;
+
     const user = new User(req.body);
+    console.log(user);
 
     await user.save();
 

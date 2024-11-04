@@ -1,11 +1,22 @@
 import express from "express";
+import cors from "cors";
+import mongoose, { connect } from "mongoose";
 import { application, db } from "./src/config/index.js";
 import { authRoutes } from "./src/routes/index.js";
-import mongoose, { connect } from "mongoose";
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  })
+);
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 try {
   connect(db.uri);
