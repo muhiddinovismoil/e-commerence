@@ -4,6 +4,7 @@ import {
   authRegisterCon,
   authGetRegisterCon,
   authGetLoginCon,
+  authGetMeCon,
 } from "../controllers/index.js";
 
 export const authRoutes = new Router();
@@ -12,8 +13,4 @@ authRoutes.post("/register", authRegisterCon);
 authRoutes.get("/register", authGetRegisterCon);
 authRoutes.post("/login", authLoginCon);
 authRoutes.get("/login", authGetLoginCon);
-authRoutes.get("/me", (req, res) => {
-  console.log("Cookies: ", req.cookies);
-
-  res.send("ME");
-});
+authRoutes.get("/me", authGetMeCon)

@@ -42,13 +42,12 @@ export const authLoginCon = async (req, res, next) => {
 
     if (!isEqual) return res.send("Email or password is not valid!");
 
-    res.cookie('cart', { items: [1, 2, 3] })
+    res.cookie("user", { email, password });
     res.send({
       message: "loggedIn",
       data: user,
     });
   } catch (error) {
-  
     next(error);
   }
 };
@@ -70,4 +69,22 @@ export const authGetLoginCon = (req, res, next) => {
   console.log(loginHtmlPath);
 
   res.sendFile(loginHtmlPath);
+};
+
+export const authGetMeCon = async (req, res, next) => {
+  const { user } = req.cookies;
+  if (!user) {
+    const loginHtmlPath = path.join(
+      process.cwd(),
+      "src",
+      "public",
+      "login.html"
+    );
+    console.log(loginHtmlPath);
+    return res.sendFile(loginHtmlPath);
+  }
+  const userExists = await User.findOne({ email: user.email });
+
+  console.log(userExists);
+  return res.send(userExists);
 };
