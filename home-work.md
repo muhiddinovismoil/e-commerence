@@ -1,96 +1,82 @@
-# 2 - oy Imtihon
+### Uyga Vazifa: ITINFO Loyihasi uchun Author va Category Jadvallariga CRUD Operatsiyalarini Yozish
 
-## Oylik Imtihon Talablari: Trello-ga O'xshash REST Xizmat Yaratish
+Bu uyga vazifa Node.js va Express.js yordamida Author va Category jadvallariga CRUD (Create, Read, Update, Delete) operatsiyalarini amalga oshirishni o'rganishni maqsad qiladi. Har bir vazifa tushuntirilgan va qadamlar ko'rsatilgan.
 
-### Maqsad:
+#### Task 1: Loyiha yaratish va asosiy konfiguratsiyani o'rnatish
 
-Ushbu imtihonning maqsadi sizning RESTful xizmat yaratish bo'yicha o'z bilim va ko'nikmangizni namoyish etish uchun. Siz PostgreSQL ma'lumotlar bazasi bilan integratsiyalashgan to'liq CRUD (~~Create~~, Read, Update, Delete) operatsiyalarni amalga oshiradigan RESTful API yaratishiz kerak bo’ladi.
+1. **Loyihani yaratish va paketlarni o'rnatish**
+   - `npm init -y` buyrug'i yordamida yangi Node.js loyihasini yarating.
+   - Express va Mongoose paketlarini o'rnating.
+     ```bash
+     npm install express mongoose dotenv nodemon joi 
+     ```
 
-### Imtihon Topshiriqlari:
+2. **Loyihani strukturalash**
+   - Quyidagi fayl va katalog strukturasini yarating:
+![[1 - Projects/najot-talim/2-OY. NodeJS, Databases/42-dars/Pasted image 20240523113042.png]]
+    
+#### Task 2: Ma'lumotlar bazasini ulash
 
-1. **GitHub Repozitoriyasini Yaratish:**
-    - Yangi GitHub repo yaratish: `nodejs-trello-service`.
-    - Repozitoriya manzili `https://github.com/%your-github%/nodejs-trello-service` bo'lishi kerak.
-2. **Resurslar va CRUD Operatsiyalar:**
-    - Quyidagi resurslar bilan ishlovchi REST endpointlar yaratish:
-    - `POST /setUp`  routega murojat qilinganda tablelar yo’q bo’lsa yaratilsin.
-    - **Autentifikatsiya:**
-        - Ro'yxatdan o'tish (`/register`) va kirish (`/login`) endpointlarini yarating:
-            - `POST /register`:
-                - Foydalanuvchi ro'yxatdan o'tishi uchun endpoint.
-                - Ma'lumotlar bazasiga foydalanuvchini passwordini `bcrypt` bilan hashlab  saqlanadi va foydalanuvchi ma'lumotlarini qaytarish kerak! (javobdan parolni olib tashlash!).
-        - `POST /login`:
-            - Foydalanuvchi tizimga kirishi uchun endpoint.
-            - Foydalanuvchini `login` va `parol` orqali tekshiriladi, agar ma'lumotlar to'g'ri bo'lsa, foydalanuvchi ma'lumotlarini qaytaradi (parolni javobdan olib tashlash).
-    - **User (Foydalanuvchi)**:
+1. **MongoDB ulanish konfiguratsiyasini yozish**
+   - `src/config/db.js` faylini yarating va unda MongoDB ulanishni konfiguratsiya qiling.
+
+2. **Asosiy ilova konfiguratsiyasi**
+   - `src/app.js` faylini yarating va Express ilovasini yarating, MongoDB ulanishini amalga oshiring va marshrutlarni o'rnating.
+
+3. **Serverni ishga tushirish**
+   - `server.js` faylini yarating va HTTP serverni ishga tushiring.
+
+#### Task 3: Modellarni yaratish
+
+1. **Author modeli**
+   - `src/models/authorModel.js` faylini yarating va Author modelini yozing.
+   
+
+2. **Category modeli**
+   - `src/models/categoryModel.js` faylini yarating va Category modelini yozing.
+
+#### Task 4: Controllerlarni yaratish
+
+1. **Author controlleri**
+   - `src/controllers/authorController.js` faylini yarating va Author uchun CRUD operatsiyalarini amalga oshiring.
+  
+
+2. **Category controlleri**
+   - `src/controllers/categoryController.js` faylini yarating va Category uchun CRUD operatsiyalarini amalga oshiring.
+
+
+#### Task 5: Routerlarni yozish
+
+1. **Author Routerlarni**
+   - `src/routes/authorRoutes.js` faylini yarating va Routerlarni yozing.
+
+3. **Category Routerlarni**
+   - `src/routes/categoryRoutes.js` faylini yarating va Routerlarni yozing.
+
+#### Task 6 :  (services)
+
+1. **Author xizmatlari**
+    - `src/services/authorService.js` faylini yarating va Author uchun CRUD operatsiyalarini amalga oshiring.
         
-        ```jsx
-        { id, name, email, password }
-        
-        ```
-        
-        - `GET /users` - barcha foydalanuvchilarni olish (javobdan parolni olib tashlash).
-        - `GET /users/:userId` - foydalanuvchini ID bo'yicha olish (javobdan parolni olib tashlash).
-        - `PUT /users/:userId` - foydalanuvchini yangilash.
-        - `DELETE /users/:userId` - foydalanuvchini o'chirish.
-    - **Board (Doskalar)**:
-        
-        ```jsx
-        { id, title, columns }
-        ```
-        
-        - `GET /boards` - barcha doskalarni olish.
-        - `GET /boards/:boardId` - doskani ID bo'yicha olish.
-        - `POST /boards` - doska yaratish.
-        - `PUT /boards/:boardId` - doskani yangilash.
-        - `DELETE /boards/:boardId` - doskani o'chirish.
-    - **Task (Vazifalar)**:
-        
-        ```jsx
-        {
-          id,
-          title,
-          order,
-          description,
-          userId, 
-          boardId,
-          columnId
-        }
-        ```
-        
-        - `GET boards/:boardId/tasks` - barcha vazifalarni olish.
-        - `GET boards/:boardId/tasks/:taskId` - vazifani ID bo'yicha olish.
-        - `POST boards/:boardId/tasks` - vazifa yaratish.
-        - `PUT boards/:boardId/tasks/:taskId` - vazifani yangilash.
-        - `DELETE boards/:boardId/tasks/:taskId` - vazifani o'chirish.
-        - 
-3. **Qo'shimcha Talablar:**
-    - **Board** o'chirilganda, uning barcha **Task**lari ham o'chirilishi kerak.
-    - **User** o'chirilganda, uning barcha **Task**lari uchun `userId` `null`ga o'zgartirilishi kerak.
-    - Endpointlar faqat   ma'lumotlar bazasi bilan ishlashligi kerak.
-    - `application/json` formati so'rov va javoblar uchun ishlatilishi kerak.
-    - Kodni bitta faylda saqlamang - ilova yaratish, **routerlar** (**controllers**) , **database** va  biznes mantiqiga oid kodlarni alohida fayllarga ajrating.
-    - Projectni ishga  tushirish uchun `npm start` buyrug'ini ishlating.
-    - Xizmat 4000-portda tinglash kerak.
-4. **Ma'lumotlar Bazasi:**
-    - Ma'lumotlar bazasi sifatida PostgreSQLdan foydalaning. `drawSQL`dan foydalanib, ma'lumotlar bazasini loyihalashtiring.
-    - `pg` moduli orqali PostgreSQLni Node.jsga ulash:
-        - `pg` modulini o'rnating.
-        - Bazaga yozishdan oldin userning passwordini `bcrypt` bilan hashlab joylash kerak!.
-        - Bazaga ulaning va CRUD operatsiyalarni amalga oshiring.
-- API larni test qilish uchun postmandan foydalanish kerak!.
-    - Postmanda folder ochib oling va har bir eng pointni o’ziga tegishle folderga saqlab keting.
-    - Projectni yuklash vaqtida postmandan siz foydalangan folderni export qilib oling!.
+2. **Category xizmatlari**
+    - `src/services/categoryService.js` faylini yarating va Category uchun CRUD operatsiyalarini amalga oshiring.
 
-### Vaqt:
+### Ko'rsatmalar
 
-- Imtihon muddati: 4 soat
+1. **Loyihani yaratish va konfiguratsiyani o'rnatish**:
+   - Birinchi topshiriqni bajaring va loyiha strukturasini tashkil qiling.
+   - MongoDB ulanishini konfiguratsiya qiling va serverni ishga tushirishni tashkil qiling.
 
-### Imtihon muvaffaqiyatli bo'lishi uchun yuqoridagi barcha talablarga rioya qilishingiz kerak. Omad! 😎.
+2. **Modellarni yaratish**:
+   - `Author` va `Category` modellarini yarating.
 
-# `BONUS`
+3. **Controllerlarni yozish**:
+   - CRUD operatsiyalarini amalga oshiruvchi controllerlarni yozing.
 
-> Bonus faqatgina avvalgi tasklarni tugatganlar uchun agarda yakunlamagan bo’lsangiz avvl tugating!. Yuqoridagi task yakunlagandan so’ng bonusga o’tish mumkin va shundagina ball qo’shiladi!.
-> 
+4. **Marshrutlarni yozish**:
+   - CRUD operatsiyalarini qo'llab-quvvatlaydigan marshrutlarni yozing.
 
-- Siz qo’shilishi kerak deb bilagan functionni qo’shing va [`README.md`](http://README.md) da shu haqida qisqacha tavsif qoldiring!.
+5. **Test qilish**:
+   - Postman yoki boshqa API testing vositasi yordamida CRUD operatsiyalarini test qiling.
+
+Agar sizda biror savol yoki tushunmovchilik bo'lsa, marhamat qilib so'rang!

@@ -24,6 +24,16 @@ app.use(
   "/static",
   express.static(path.join(import.meta.dirname, "src", "public"))
 );
+// const testMiddleware = (a) => {
+//   return (req, res, next) => {
+//     console.log(a);
+//     res.send(a);
+//   };
+// };
+
+
+// app.use("/testa", testMiddleware("a"), (req, res, next) => {});
+// app.use("/testb", testMiddleware("b"), (req, res, next) => {});
 
 try {
   connect(db.uri);
