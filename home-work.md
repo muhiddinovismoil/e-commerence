@@ -1,9 +1,10 @@
-### Uyga Vazifa: ITINFO Loyihasi uchun CRUD Operatsiyalarini Yozish
+### Uyga Vazifa: ITINFO Loyihasi uchun CRUD Operatsiyalarini Yozish va JWT ni Integratsiya Qilish
 
 ### Vazifalar Ro'yxati:
 
 1. **Author va Category jadvallari uchun CRUD operatsiyalarini yozish**
 2. **User va Admin kolleksiyalari uchun validatsiya va CRUD operatsiyalarini yozish**
+3. **JWT orqali autentifikatsiya tizimini qo'shish**
 
 ### 1. Author va Category jadvallari uchun CRUD operatsiyalari
 
@@ -33,66 +34,15 @@
 - Admin yangilash (SuperAdmin)
 - Admin o'chirish (SuperAdmin)
 
+### 3. JWT orqali autentifikatsiya tizimini qo'shish
+
+#### Vazifalar:
+- JWT token yaratish
+- Login va token olish uchun endpoint yaratish
+- JWT orqali himoyalangan endpointlarni autentifikatsiya qilish
+
 ### API Yo'nalishlari
 
-#### SuperAdmin:
-
-**User CRUD operatsiyalari:**
-- Foydalanuvchini yaratish:
-  ```bash
-  POST localhost:4000/superadmin/user/
-  Body:
-    {
-      "email": "user@example.com",
-      "password": "strong_password",
-      // Boshqa foydalanuvchi xususiyatlari (ismi, roli, h.k.)
-    }
-  ```
-
-- Foydalanuvchini o'qish:
-  ```bash
-  GET localhost:4000/superadmin/user/
-  ```
-
-- Foydalanuvchini yangilash:
-  ```bash
-  PUT localhost:4000/superadmin/user/{user_id}
-  Body:
-    {
-      // Yangilanishi kerak bo'lgan xususiyatlar (masalan, email, parol)
-    }
-  ```
-
-- Foydalanuvchini o'chirish:
-  ```bash
-  DELETE localhost:4000/superadmin/user/{user_id}
-  ```
-
-**Admin CRUD operatsiyalari:**
-- Admin yaratish:
-  ```bash
-  POST localhost:4000/superadmin/admin/
-  Body:
-    {
-      "email": "admin@example.com",
-      "password": "strong_password",
-      // Boshqa admin xususiyatlari
-    }
-  ```
-
-- Adminni o'chirish:
-  ```bash
-  DELETE localhost:4000/superadmin/admin/{admin_id}
-  ```
-
-- Adminni yangilash:
-  ```bash
-  PUT localhost:4000/superadmin/admin/{admin_id}
-  Body:
-    {
-      // Yangilanishi kerak bo'lgan xususiyatlar
-    }
-  ```
 
 #### Admin:
 
@@ -155,25 +105,23 @@
 ### Admin roli cheklovlari:
 - Admin foydalanuvchi va kataloglarni o'chira olmaydi, ammo yaratish va yangilash mumkin.
 
-### API Yo'nalishlari uchun kod misollari
+### Vazifa bo'yicha qo'llanma
 
-**User routerlari uchun kod (`src/routes/userRoutes.js`):**
-`
-**Category routerlari uchun kod (`src/routes/categoryRoutes.js`):**
+#### 1. Author va Category CRUD operatsiyalarini yozish
+- Har bir operatsiya uchun kerakli endpointlarni yozing (`POST`, `GET`, `PUT`, `DELETE`).
+- Ma'lumotlarni saqlash va olish uchun mos keladigan modellarni yarating ( Mongoose  yordamida).
 
+#### 2. User va Admin validatsiya va CRUD operatsiyalarini yozish
+- SuperAdmin roliga ega foydalanuvchi tomonidan boshqariladigan CRUD operatsiyalarini yozing.
+- Yaratish, o'qish, yangilash va o'chirish uchun endpointlarni yozing.
 
-Admin rolining foydalanuvchi va kataloglarni o'chira olmasligini ta'minlash uchun middleware yaratish mumkin.
-
-**Middleware (`src/middlewares/roleMiddleware.js`):**
-
-**Routerlarga middleware qo'llash:**
-
-
-**Category routerlari uchun middleware (`src/routes/categoryRoutes.js`):**
-
+#### 3. JWT orqali autentifikatsiya tizimini qo'shish
+- JWT token yaratish uchun login endpointini yozing (`POST /login`).
+- Himoyalangan endpointlar uchun JWT autentifikatsiya middleware yarating.
+- JWT tokenlarni tekshirish uchun middleware ni endpointlarga qo'llang.
 
 ### Yakuniy eslatmalar:
 1. **Kod strukturasini va xavfsizlikni ta'minlash uchun middleware dan foydalaning.**
 2. **API nuqtalarini sinovdan o'tkazish uchun Postman yoki boshqa vositalardan foydalaning.**
 
-Agar qo'shimcha savollar yoki tushunmovchiliklar bo'lsa, marhamat qilib so'rang!
+Agar qo'shimcha savollar yoki tushunmovchiliklar bo'lsa, marhamat qilib so'rang!i

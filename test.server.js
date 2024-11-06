@@ -6,6 +6,24 @@ const users = new Map();
 
 app.use(express.json());
 
+const authorizationGuard = (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const token = req.headers?.authorization.split(" ")[1];
+
+    jwt.verify(token, "qwer12345", (err, decode) => {
+      if (err) {
+        return res.status(401).send("un authorization");
+      }
+      req.user = decode
+      next();
+
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 app.post("/auth/register", (req, res) => {
   const { email } = req.body;
   const user = users.has(email);
@@ -35,19 +53,12 @@ app.post("/auth/login", (req, res) => {
   } catch (error) {}
 });
 
-app.get("/auth/me", (req, res) => {
+app.get("/auth/me", authorizationGuard, (req, res) => {
   try {
-    const token = req.headers?.authorization.split(" ")[1];
+    const user = req.user
 
-    jwt.verify(token, "qwer12345", (err, decode) => {
-      if (err) {
-        return res.status(401).send("un authorization");
-      }
-      const user = users.get(decode?.email);
-      console.log(user);
-
-      res.send(user);
-    });
+    console.log(user)
+    res.send(user)
   } catch (error) {}
 });
 
