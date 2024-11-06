@@ -1,82 +1,179 @@
-### Uyga Vazifa: ITINFO Loyihasi uchun Author va Category Jadvallariga CRUD Operatsiyalarini Yozish
+### Uyga Vazifa: ITINFO Loyihasi uchun CRUD Operatsiyalarini Yozish
 
-Bu uyga vazifa Node.js va Express.js yordamida Author va Category jadvallariga CRUD (Create, Read, Update, Delete) operatsiyalarini amalga oshirishni o'rganishni maqsad qiladi. Har bir vazifa tushuntirilgan va qadamlar ko'rsatilgan.
+### Vazifalar Ro'yxati:
 
-#### Task 1: Loyiha yaratish va asosiy konfiguratsiyani o'rnatish
+1. **Author va Category jadvallari uchun CRUD operatsiyalarini yozish**
+2. **User va Admin kolleksiyalari uchun validatsiya va CRUD operatsiyalarini yozish**
 
-1. **Loyihani yaratish va paketlarni o'rnatish**
-   - `npm init -y` buyrug'i yordamida yangi Node.js loyihasini yarating.
-   - Express va Mongoose paketlarini o'rnating.
-     ```bash
-     npm install express mongoose dotenv nodemon joi 
-     ```
+### 1. Author va Category jadvallari uchun CRUD operatsiyalari
 
-2. **Loyihani strukturalash**
-   - Quyidagi fayl va katalog strukturasini yarating:
-![[1 - Projects/najot-talim/2-OY. NodeJS, Databases/42-dars/Pasted image 20240523113042.png]]
-    
-#### Task 2: Ma'lumotlar bazasini ulash
+#### Author CRUD operatsiyalari:
+- Author yaratish
+- Author o'qish (barchasi yoki ID bo'yicha)
+- Author yangilash
+- Author o'chirish
 
-1. **MongoDB ulanish konfiguratsiyasini yozish**
-   - `src/config/db.js` faylini yarating va unda MongoDB ulanishni konfiguratsiya qiling.
+#### Category CRUD operatsiyalari:
+- Category yaratish
+- Category o'qish (barchasi yoki ID bo'yicha)
+- Category yangilash
+- Category o'chirish
 
-2. **Asosiy ilova konfiguratsiyasi**
-   - `src/app.js` faylini yarating va Express ilovasini yarating, MongoDB ulanishini amalga oshiring va marshrutlarni o'rnating.
+### 2. SuperAdmin User va Admin kolleksiyalari uchun validatsiya va CRUD operatsiyalari
 
-3. **Serverni ishga tushirish**
-   - `server.js` faylini yarating va HTTP serverni ishga tushiring.
+#### User CRUD operatsiyalari:
+- User yaratish (SuperAdmin)
+- User o'qish (SuperAdmin)
+- User yangilash (SuperAdmin)
+- User o'chirish (SuperAdmin)
 
-#### Task 3: Modellarni yaratish
+#### Admin CRUD operatsiyalari:
+- Admin yaratish (SuperAdmin)
+- Admin o'qish (SuperAdmin)
+- Admin yangilash (SuperAdmin)
+- Admin o'chirish (SuperAdmin)
 
-1. **Author modeli**
-   - `src/models/authorModel.js` faylini yarating va Author modelini yozing.
-   
+### API Yo'nalishlari
 
-2. **Category modeli**
-   - `src/models/categoryModel.js` faylini yarating va Category modelini yozing.
+#### SuperAdmin:
 
-#### Task 4: Controllerlarni yaratish
+**User CRUD operatsiyalari:**
+- Foydalanuvchini yaratish:
+  ```bash
+  POST localhost:4000/superadmin/user/
+  Body:
+    {
+      "email": "user@example.com",
+      "password": "strong_password",
+      // Boshqa foydalanuvchi xususiyatlari (ismi, roli, h.k.)
+    }
+  ```
 
-1. **Author controlleri**
-   - `src/controllers/authorController.js` faylini yarating va Author uchun CRUD operatsiyalarini amalga oshiring.
-  
+- Foydalanuvchini o'qish:
+  ```bash
+  GET localhost:4000/superadmin/user/
+  ```
 
-2. **Category controlleri**
-   - `src/controllers/categoryController.js` faylini yarating va Category uchun CRUD operatsiyalarini amalga oshiring.
+- Foydalanuvchini yangilash:
+  ```bash
+  PUT localhost:4000/superadmin/user/{user_id}
+  Body:
+    {
+      // Yangilanishi kerak bo'lgan xususiyatlar (masalan, email, parol)
+    }
+  ```
+
+- Foydalanuvchini o'chirish:
+  ```bash
+  DELETE localhost:4000/superadmin/user/{user_id}
+  ```
+
+**Admin CRUD operatsiyalari:**
+- Admin yaratish:
+  ```bash
+  POST localhost:4000/superadmin/admin/
+  Body:
+    {
+      "email": "admin@example.com",
+      "password": "strong_password",
+      // Boshqa admin xususiyatlari
+    }
+  ```
+
+- Adminni o'chirish:
+  ```bash
+  DELETE localhost:4000/superadmin/admin/{admin_id}
+  ```
+
+- Adminni yangilash:
+  ```bash
+  PUT localhost:4000/superadmin/admin/{admin_id}
+  Body:
+    {
+      // Yangilanishi kerak bo'lgan xususiyatlar
+    }
+  ```
+
+#### Admin:
+
+**Category CRUD operatsiyalari:**
+- Kategoriyani yaratish:
+  ```bash
+  POST localhost:4000/admin/category/
+  Body:
+    {
+      "name": "Category Name",
+      // Boshqa kategoriya xususiyatlari (ta'rif, h.k.)
+    }
+  ```
+
+- Kategoriyani o'qish:
+  ```bash
+  GET localhost:4000/admin/category/
+  ```
+
+- Kategoriyani yangilash:
+  ```bash
+  PUT localhost:4000/admin/category/{category_id}
+  Body:
+    {
+      // Yangilanishi kerak bo'lgan xususiyatlar (masalan, nomi, ta'rifi)
+    }
+  ```
+
+- Kategoriyani o'chirish:
+  ```bash
+  DELETE localhost:4000/admin/category/{category_id}
+  ```
+
+**User CRUD operatsiyalari:**
+- Foydalanuvchini yaratish:
+  ```bash
+  POST localhost:4000/admin/user/
+  Body:
+    {
+      "email": "user@example.com",
+      "password": "strong_password",
+      // Boshqa foydalanuvchi xususiyatlari (ismi, roli, h.k.)
+    }
+  ```
+
+- Foydalanuvchini o'qish:
+  ```bash
+  GET localhost:4000/admin/user/
+  ```
+
+- Foydalanuvchini yangilash:
+  ```bash
+  PUT localhost:4000/admin/user/{user_id}
+  Body:
+    {
+      // Yangilanishi kerak bo'lgan xususiyatlar (masalan, email, parol)
+    }
+  ```
+
+### Admin roli cheklovlari:
+- Admin foydalanuvchi va kataloglarni o'chira olmaydi, ammo yaratish va yangilash mumkin.
+
+### API Yo'nalishlari uchun kod misollari
+
+**User routerlari uchun kod (`src/routes/userRoutes.js`):**
+`
+**Category routerlari uchun kod (`src/routes/categoryRoutes.js`):**
 
 
-#### Task 5: Routerlarni yozish
+Admin rolining foydalanuvchi va kataloglarni o'chira olmasligini ta'minlash uchun middleware yaratish mumkin.
 
-1. **Author Routerlarni**
-   - `src/routes/authorRoutes.js` faylini yarating va Routerlarni yozing.
+**Middleware (`src/middlewares/roleMiddleware.js`):**
 
-3. **Category Routerlarni**
-   - `src/routes/categoryRoutes.js` faylini yarating va Routerlarni yozing.
+**Routerlarga middleware qo'llash:**
 
-#### Task 6 :  (services)
 
-1. **Author xizmatlari**
-    - `src/services/authorService.js` faylini yarating va Author uchun CRUD operatsiyalarini amalga oshiring.
-        
-2. **Category xizmatlari**
-    - `src/services/categoryService.js` faylini yarating va Category uchun CRUD operatsiyalarini amalga oshiring.
+**Category routerlari uchun middleware (`src/routes/categoryRoutes.js`):**
 
-### Ko'rsatmalar
 
-1. **Loyihani yaratish va konfiguratsiyani o'rnatish**:
-   - Birinchi topshiriqni bajaring va loyiha strukturasini tashkil qiling.
-   - MongoDB ulanishini konfiguratsiya qiling va serverni ishga tushirishni tashkil qiling.
+### Yakuniy eslatmalar:
+1. **Kod strukturasini va xavfsizlikni ta'minlash uchun middleware dan foydalaning.**
+2. **API nuqtalarini sinovdan o'tkazish uchun Postman yoki boshqa vositalardan foydalaning.**
 
-2. **Modellarni yaratish**:
-   - `Author` va `Category` modellarini yarating.
-
-3. **Controllerlarni yozish**:
-   - CRUD operatsiyalarini amalga oshiruvchi controllerlarni yozing.
-
-4. **Marshrutlarni yozish**:
-   - CRUD operatsiyalarini qo'llab-quvvatlaydigan marshrutlarni yozing.
-
-5. **Test qilish**:
-   - Postman yoki boshqa API testing vositasi yordamida CRUD operatsiyalarini test qiling.
-
-Agar sizda biror savol yoki tushunmovchilik bo'lsa, marhamat qilib so'rang!
+Agar qo'shimcha savollar yoki tushunmovchiliklar bo'lsa, marhamat qilib so'rang!
