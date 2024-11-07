@@ -1,1 +1,2 @@
-export * from "./auth.controllers.js"
+export * from "./auth.controller.js"
+export * from "./blog.controller.js"

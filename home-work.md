@@ -20,21 +20,7 @@
 - Category yangilash
 - Category o'chirish
 
-### 2. SuperAdmin User va Admin kolleksiyalari uchun validatsiya va CRUD operatsiyalari
-
-#### User CRUD operatsiyalari:
-- User yaratish (SuperAdmin)
-- User o'qish (SuperAdmin)
-- User yangilash (SuperAdmin)
-- User o'chirish (SuperAdmin)
-
-#### Admin CRUD operatsiyalari:
-- Admin yaratish (SuperAdmin)
-- Admin o'qish (SuperAdmin)
-- Admin yangilash (SuperAdmin)
-- Admin o'chirish (SuperAdmin)
-
-### 3. JWT orqali autentifikatsiya tizimini qo'shish
+### 2. JWT orqali autentifikatsiya tizimini qo'shish
 
 #### Vazifalar:
 - JWT token yaratish
@@ -43,43 +29,12 @@
 
 ### API Yo'nalishlari
 
-
-#### Admin:
-
-**Category CRUD operatsiyalari:**
-- Kategoriyani yaratish:
-  ```bash
-  POST localhost:4000/admin/category/
-  Body:
-    {
-      "name": "Category Name",
-      // Boshqa kategoriya xususiyatlari (ta'rif, h.k.)
-    }
-  ```
-
-- Kategoriyani o'qish:
-  ```bash
-  GET localhost:4000/admin/category/
-  ```
-
-- Kategoriyani yangilash:
-  ```bash
-  PUT localhost:4000/admin/category/{category_id}
-  Body:
-    {
-      // Yangilanishi kerak bo'lgan xususiyatlar (masalan, nomi, ta'rifi)
-    }
-  ```
-
-- Kategoriyani o'chirish:
-  ```bash
-  DELETE localhost:4000/admin/category/{category_id}
-  ```
+#### SuperAdmin:
 
 **User CRUD operatsiyalari:**
 - Foydalanuvchini yaratish:
   ```bash
-  POST localhost:4000/admin/user/
+  POST localhost:4000/user/
   Body:
     {
       "email": "user@example.com",
@@ -90,12 +45,101 @@
 
 - Foydalanuvchini o'qish:
   ```bash
-  GET localhost:4000/admin/user/
+  GET localhost:4000/user/
   ```
 
 - Foydalanuvchini yangilash:
   ```bash
-  PUT localhost:4000/admin/user/{user_id}
+  PUT localhost:4000/user/{user_id}
+  Body:
+    {
+      // Yangilanishi kerak bo'lgan xususiyatlar (masalan, email, parol)
+    }
+  ```
+
+- Foydalanuvchini o'chirish:
+  ```bash
+  DELETE localhost:4000/user/{user_id}
+  ```
+
+**Admin CRUD operatsiyalari:**
+- Admin yaratish:
+  ```bash
+  POST localhost:4000/user/
+  Body:
+    {
+      "email": "admin@example.com",
+      "password": "strong_password",
+      // Boshqa admin xususiyatlari
+    }
+  ```
+
+- Adminni o'chirish:
+  ```bash
+  DELETE localhost:4000/user/{admin_id}
+  ```
+
+- Adminni yangilash:
+  ```bash
+  PUT localhost:4000/user/{admin_id}
+  Body:
+    {
+      // Yangilanishi kerak bo'lgan xususiyatlar
+    }
+  ```
+
+#### Admin:
+
+**Category CRUD operatsiyalari:**
+- Kategoriyani yaratish:
+  ```bash
+  POST localhost:4000/category/
+  Body:
+    {
+      "name": "Category Name",
+      // Boshqa kategoriya xususiyatlari (ta'rif, h.k.)
+    }
+  ```
+
+- Kategoriyani o'qish:
+  ```bash
+  GET localhost:4000/category/
+  ```
+
+- Kategoriyani yangilash:
+  ```bash
+  PUT localhost:4000/category/{category_id}
+  Body:
+    {
+      // Yangilanishi kerak bo'lgan xususiyatlar (masalan, nomi, ta'rifi)
+    }
+  ```
+
+- Kategoriyani o'chirish:
+  ```bash
+  DELETE localhost:4000/category/{category_id}
+  ```
+
+**User CRUD operatsiyalari:**
+- Foydalanuvchini yaratish:
+  ```bash
+  POST localhost:4000/user/
+  Body:
+    {
+      "email": "user@example.com",
+      "password": "strong_password",
+      // Boshqa foydalanuvchi xususiyatlari (ismi, roli, h.k.)
+    }
+  ```
+
+- Foydalanuvchini o'qish:
+  ```bash
+  GET localhost:4000/user/
+  ```
+
+- Foydalanuvchini yangilash:
+  ```bash
+  PUT localhost:4000/user/{user_id}
   Body:
     {
       // Yangilanishi kerak bo'lgan xususiyatlar (masalan, email, parol)
