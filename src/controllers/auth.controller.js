@@ -27,7 +27,7 @@ export const registerController = async (req, res, next) => {
 export const loginController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const currentUser = await User.find({ email });
+    const currentUser = await User.findOne({ email });
 
     if (!currentUser) {
       return res
@@ -35,7 +35,7 @@ export const loginController = async (req, res, next) => {
         .send(errorMessages.USER_NOT_FOUND);
     }
 
-    const passwordIsEqual = User.compare(password);
+    const passwordIsEqual = currentUser.compare(password);
 
     if (!passwordIsEqual) {
       return res
