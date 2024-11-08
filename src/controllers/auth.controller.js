@@ -39,7 +39,7 @@ export const loginController = (req, res, next) => {
     const ttl = {
       expiresIn: "20m",
     };
-    
+
     const accessSecretKey = "qwer12345";
     const refreshSecretKey = "12345qwer";
 

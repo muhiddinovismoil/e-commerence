@@ -1,6 +1,6 @@
 import express from "express";
 import morgan from "morgan";
-import { authRouter, blogRouter } from "./src/routes/index.js";
+import { authRouter, blogRouter, userRouter } from "./src/routes/index.js";
 import { logger } from "./src/utils/index.js";
 
 const app = express();
@@ -11,6 +11,7 @@ app.use(morgan("dev"));
 
 app.use("/auth", authRouter);
 app.use("/blog", blogRouter);
+app.use("/api/v1/users", userRouter);
 
 app.use((err, req, res, next) => {
   if (err) {
