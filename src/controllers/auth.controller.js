@@ -1,6 +1,11 @@
 import jwt from "jsonwebtoken";
 import { User } from "../modules/index.js";
-import { statusCodes, errorMessages, ApiError } from "../utils/index.js";
+import {
+  statusCodes,
+  errorMessages,
+  ApiError,
+  logger,
+} from "../utils/index.js";
 
 export const registerController = async (req, res, next) => {
   try {
@@ -71,6 +76,26 @@ export const loginController = async (req, res, next) => {
 
 export const refreshTokenController = async (req, res, next) => {
   try {
+    const { token } = req.body;
+    jwt.verify(token, process.env.JWT_REFRESH_SECRET, (error, decode) => {
+      if (error)
+        throw new Error(statusCodes.FORBIDDEN, errorMessages.FORBIDDEN);
+
+      logger.info({ decode });
+      
+      const accessToken = jwt.sign(
+        {
+          sub: decode.sub,
+          role: decode.role,
+        },
+        process.env.JWT_ACCESS_SECRET,
+        {
+          expiresIn: process.env.JWT_ACCESS_EXPIRES_IN,
+        }
+      );
+
+      return res.send({ accessToken, refreshToken: token });
+    });
   } catch (error) {
     next(new ApiError(error.statusCode, error.message));
   }
