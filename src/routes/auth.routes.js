@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { loginController, refreshTokenController, registerController } from "../controllers/index.js";
+import {
+  loginController,
+  refreshTokenController,
+  registerController,
+} from "../controllers/index.js";
 import { authGuard, roleGuard } from "../middleware/index.js";
 
 export const authRouter = new Router();
