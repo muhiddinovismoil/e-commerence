@@ -19,7 +19,7 @@ export const registerController = async (req, res, next) => {
       .status(statusCodes.CONFLICT)
       .send(errorMessages.EMAIL_ALREADY_EXISTS);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     next(new ApiError(error.statusCode, error.message));
   }
 };
@@ -35,8 +35,9 @@ export const loginController = async (req, res, next) => {
         .send(errorMessages.USER_NOT_FOUND);
     }
 
-    const passwordIsEqual = currentUser.compare(password);
+    const passwordIsEqual = await currentUser.compare(password);
 
+    console.log(passwordIsEqual);
     if (!passwordIsEqual) {
       return res
         .status(statusCodes.BAD_REQUEST)

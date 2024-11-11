@@ -12,13 +12,12 @@ export const authGuard = (req, res, next) => {
       return res.status(409).send("Not valid data");
     }
 
-    jwt.verify(token, "qwer12345", (err, payload) => {
+    jwt.verify(token, process.env.JWT_ACCESS_SECRET, (err, payload) => {
       if (err) {
         return res.status(403).send("Forbidden");
       }
       req.user = payload;
-      console.log(payload);
-      
+
       next();
     });
   } catch (error) {
