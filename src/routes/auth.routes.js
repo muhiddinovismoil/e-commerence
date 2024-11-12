@@ -11,3 +11,4 @@ export const authRouter = new Router();
 authRouter.post("/register", registerController);
 authRouter.post("/login", loginController);
 authRouter.post("/refreshToken", refreshTokenController);
+authRouter.post("/verify", verifyController);

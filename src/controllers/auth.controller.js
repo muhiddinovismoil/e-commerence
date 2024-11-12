@@ -1,23 +1,33 @@
 import jwt from "jsonwebtoken";
-import { User } from "../modules/index.js";
+import { OTP, User } from "../modules/index.js";
 import {
   statusCodes,
   errorMessages,
   ApiError,
   logger,
 } from "../utils/index.js";
+import { otpGenerator, sendMail } from "../helpers/index.js";
 
 export const registerController = async (req, res, next) => {
   try {
-    const { email, role } = req.body;
+    const { email } = req.body;
+
     const currentUser = await User.findOne({ email });
 
     if (!currentUser) {
-      console.log({ currentUser });
-      const user = new User(req.body);
-      console.log({ user });
+      const otp = otpGenerator();
 
+      await sendMail(email, "OTP", `this is your OTP: ${otp}`);
+
+      const user = new User(req.body);
       await user.save();
+
+      const db_otp = new OTP({
+        user_id: user._id,
+        otp_code: otp,
+      });
+
+      await db_otp.save();
       return res.status(statusCodes.CREATED).send("created");
     }
     return res
@@ -82,7 +92,7 @@ export const refreshTokenController = async (req, res, next) => {
         throw new Error(statusCodes.FORBIDDEN, errorMessages.FORBIDDEN);
 
       logger.info({ decode });
-      
+
       const accessToken = jwt.sign(
         {
           sub: decode.sub,
@@ -96,6 +106,33 @@ export const refreshTokenController = async (req, res, next) => {
 
       return res.send({ accessToken, refreshToken: token });
     });
+  } catch (error) {
+    next(new ApiError(error.statusCode, error.message));
+  }
+};
+
+export const verifyController = async (req, res, next) => {
+  try {
+    const { otp, email } = req.body;
+
+    const currentUser = await User.findOne({ email });
+    const currentOtp = await OTP.findOne({ user_id: currentUser._id });
+
+    const isEqual = currentOtp.verify(otp);
+
+    if (!isEqual) {
+      return res.send("OTP is not valid");
+    }
+
+    await OTP.deleteOne({ user_id: currentUser._id });
+    await User.updateOne(
+      { email },
+      {
+        is_active: true,
+      }
+    );
+
+    res.send("user is actived");
   } catch (error) {
     next(new ApiError(error.statusCode, error.message));
   }
