@@ -3,6 +3,7 @@ import {
   loginController,
   refreshTokenController,
   registerController,
+  verifyController,
 } from "../controllers/index.js";
 import { authGuard, roleGuard } from "../middleware/index.js";
 
