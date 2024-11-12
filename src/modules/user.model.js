@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin", "superAdmin"],
       default: "user",
     },
+    is_active: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
@@ -31,7 +35,6 @@ userSchema.pre("save", async function () {
   const hashPassword = await hash(this.password, salt);
   this.password = hashPassword;
 });
-
 
 userSchema.method("compare", function (userPassword) {
   return compare(userPassword, this.password);
