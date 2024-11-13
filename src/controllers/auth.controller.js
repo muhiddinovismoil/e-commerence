@@ -10,6 +10,7 @@ import { otpGenerator, sendMail } from "../helpers/index.js";
 
 export const registerController = async (req, res, next) => {
   try {
+    throw new Error("xatocha");
     const { email } = req.body;
 
     const currentUser = await User.findOne({ email });
@@ -34,7 +35,7 @@ export const registerController = async (req, res, next) => {
       .status(statusCodes.CONFLICT)
       .send(errorMessages.EMAIL_ALREADY_EXISTS);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     next(new ApiError(error.statusCode, error.message));
   }
 };
@@ -80,6 +81,7 @@ export const loginController = async (req, res, next) => {
       refreshToken,
     });
   } catch (error) {
+    logger.error(error);
     next(new ApiError(error.statusCode, error.message));
   }
 };
@@ -107,6 +109,7 @@ export const refreshTokenController = async (req, res, next) => {
       return res.send({ accessToken, refreshToken: token });
     });
   } catch (error) {
+    logger.error(error);
     next(new ApiError(error.statusCode, error.message));
   }
 };
@@ -134,6 +137,7 @@ export const verifyController = async (req, res, next) => {
 
     res.send("user is actived");
   } catch (error) {
+    logger.error(error);
     next(new ApiError(error.statusCode, error.message));
   }
 };

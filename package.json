@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@logtail/node": "^0.5.2",
+    "@logtail/winston": "^0.5.2",
     "bcrypt": "^5.1.1",
     "chalk": "^5.3.0",
     "dotenv": "^16.4.5",
@@ -25,7 +27,9 @@
     "nodemailer": "^6.9.16",
     "otp-generator": "^4.0.1",
     "pino-http": "^10.3.0",
-    "playwright": "^1.48.2"
+    "playwright": "^1.48.2",
+    "winston": "^3.17.0",
+    "winston-mongodb": "^6.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.2",
