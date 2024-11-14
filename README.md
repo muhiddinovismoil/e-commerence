@@ -13,4 +13,5 @@ pnpm add
     nodemailer
     otp-generator
     winston
+    joi
 ```
