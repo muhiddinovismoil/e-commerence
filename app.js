@@ -1,4 +1,4 @@
-var a = 12
+const a = 12
 console.log(a)
 console.log(a)
 console.log('a')
