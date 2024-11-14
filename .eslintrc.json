@@ -2,16 +2,11 @@
     "env": {
         "es2021": true
     },
-    "extends": [
-        "prettier",
-        "plugin:node/recommended"
-    ],
-    "plugins": [
-        "prettier"
-    ],
+    "extends": ["prettier", "plugin:node/recommended"],
+    "plugins": ["prettier"],
     "rules": {
         "prettier/prettier": "error",
         "no-unused-vars": "error",
-        "no-console": "off",
+        "no-console": "off"
     }
 }

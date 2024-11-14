@@ -1,16 +1,23 @@
 {
-    "name": "n-14",
+    "name": "e-commerece",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "nodejs e-commerece project",
+    "main": "server.js",
     "type": "module",
     "scripts": {
         "lint": "eslint .",
         "lint:fix": "eslint --fix .",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "start": "node server.js",
+        "start:dev": "node --watch server.js"
     },
-    "keywords": [],
-    "author": "",
+    "keywords": [
+        "e-commerece",
+        "nodejs",
+        "js",
+        "postgres"
+    ],
+    "author": "muhiddinovi45@gmail.com",
     "license": "ISC",
     "devDependencies": {
         "@eslint/js": "^9.14.0",
@@ -21,5 +28,13 @@
         "eslint-plugin-prettier": "^5.2.1",
         "globals": "^15.12.0",
         "prettier": "3.3.3"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "express": "^4.21.1",
+        "joi": "^17.13.3",
+        "morgan": "^1.10.0",
+        "pg": "^8.13.1",
+        "winston": "^3.17.0"
     }
 }
