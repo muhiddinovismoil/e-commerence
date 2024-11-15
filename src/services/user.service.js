@@ -40,3 +40,4 @@ export async function deleteUserService(query, data) {
         return error
     }
 }
+
