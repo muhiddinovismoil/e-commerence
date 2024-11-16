@@ -19,8 +19,12 @@ import {
     authRouter,
     categoryRouter,
     productsRouter,
+    cartsItemRouter,
+    cartsRouter,
+    orderRouter,
+    reviewRouter,
+    wishlistRouter,
 } from './routes/index.js'
-
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -31,6 +35,11 @@ app.use('/api/v1/address', addressRouter)
 app.use('/api/v1/socialprofile', socialProfileRouter)
 app.use('/api/v1/category', categoryRouter)
 app.use('/api/v1/products', productsRouter)
+app.use('/api/v1/carts', cartsRouter)
+app.use('/api/v1/carts-item', cartsItemRouter)
+app.use('/api/v1/orders', orderRouter)
+app.use('/api/v1/reviews', reviewRouter)
+app.use('/api/v1/wishlists', wishlistRouter)
 
 app.use((err, req, res, next) => {
     if (err) {
