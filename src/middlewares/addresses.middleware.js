@@ -1,9 +1,8 @@
-import { addressSchema } from '../schema/index.js'
-export const validateAddress = (req, res, next) => {
+export const validateAddress = (addressSchema) => (req, res, next) => {
     try {
-        const { error } = addressSchema.validate(req.body)
+        const { error } = addressSchema.parse(req.body)
         if (error) {
-            return res.status(400).json({ error: error.details[0].message })
+            throw new Error({ error: error.details[0].message })
         }
         next()
     } catch (error) {

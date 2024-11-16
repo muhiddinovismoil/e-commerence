@@ -1,3 +1,5 @@
 export * from './addresses/address.validation.js'
 export * from './social_profiles/social-profiles.validation.js'
 export * from './users/users.validation.js'
+export * from './products/products.validation.js'
+export * from './categories/categories.validation.js'

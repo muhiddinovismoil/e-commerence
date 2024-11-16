@@ -4,6 +4,8 @@ import {
     createUserTable,
     addressTable,
     createSocialProfilesTable,
+    creaetCategoryTable,
+    createProductsTable,
 } from './models/index.js'
 import {
     userRouter,
@@ -20,10 +22,19 @@ app.use('/api/v1/users', userRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/address', addressRouter)
 app.use('/api/v1/socialprofile', socialProfileRouter)
+
+app.use((err, req, res,next) => {
+    if (err) {
+        return res.send(err.message)
+    }
+    return res.send('Not found')
+})
 app.get('/api/v1/setup', async (req, res) => {
     await createUserTable()
     await addressTable()
     await createSocialProfilesTable()
-    res.send('Table created ...')
+    await creaetCategoryTable()
+    await createProductsTable()
+    res.status(200).send({ msg: 'Tables are created Successfully' })
 })
 export default app

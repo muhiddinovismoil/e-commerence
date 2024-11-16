@@ -1,9 +1,9 @@
-import { socialProfilesScheme } from '../schema/index.js'
+import { socialProfilesScheme } from '../validations/index.js'
 export const validateProfiles = (req, res, next) => {
     try {
-        const { error } = socialProfilesScheme.validate(req.body)
+        const { error } = socialProfilesScheme.parse(req.body)
         if (error) {
-            return res.status(400).json({ error: error.details[0].message })
+            throw new Error({ error: error.details[0].message })
         }
         next()
     } catch (error) {

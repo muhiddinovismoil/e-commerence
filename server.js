@@ -1,6 +1,6 @@
 import app from './src/app.js'
 import { config } from './src/config/index.js'
-import { logger } from './src/utils/logger.js'
+import { logger } from './src/utils/index.js'
 import pool from './src/databases/index.js'
 const bootstrap = async () => {
     try {

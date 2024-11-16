@@ -1,9 +1,9 @@
-import { userScheme } from '../schema/index.js'
+import { userScheme } from '../validations/index.js'
 export const validateUser = (req, res, next) => {
     try {
-        const { error } = userScheme.validate(req.body)
+        const { error } = userScheme.parse(req.body)
         if (error) {
-            return res.status(400).json({ error: error.details[0].message })
+            throw new Error({ error: error.details[0].message })
         }
         next()
     } catch (error) {
