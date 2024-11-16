@@ -8,8 +8,18 @@ import {
 } from '../controllers/index.js'
 import { validateProducts, authGuard, roleGuard } from '../middlewares/index.js'
 export const productsRouter = Router()
-productsRouter.get('/', getAllProductsController)
-productsRouter.get('/:id', getProductByIdController)
-productsRouter.post('/', validateProducts, createProductController)
-productsRouter.put('/:id', updateProductController)
-productsRouter.delete('/:id', deleteProductController)
+productsRouter.get('/', authGuard, getAllProductsController)
+productsRouter.get('/:id', authGuard, getProductByIdController)
+productsRouter.post('/', authGuard, validateProducts, createProductController)
+productsRouter.put(
+    '/:id',
+    authGuard,
+    roleGuard('admin', 'moderator'),
+    updateProductController,
+)
+productsRouter.delete(
+    '/:id',
+    authGuard,
+    roleGuard('admin', 'moderator'),
+    deleteProductController,
+)
