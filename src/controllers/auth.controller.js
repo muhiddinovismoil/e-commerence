@@ -31,15 +31,6 @@ export async function loginUserController(req, res, next) {
         next(error)
     }
 }
-export async function verifyUserController(req, res, next) {
-    try {
-    } catch (error) {
-        logger.error(
-            `Route: /api/v1/auth/verify METHOD: POST,Error: ${error.message}`,
-        )
-        next(error)
-    }
-}
 export async function refreshAccessTokenController(req, res, next) {
     try {
         if (!req.body.refreshToken) {

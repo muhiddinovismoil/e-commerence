@@ -26,27 +26,22 @@ export const registerUser = async (user) => {
             throw new Error('User email already in use')
         }
         const otp = generateOtp()
-        sendMail(
-            user.email,
-            'OTP',
-            `<h1>This is your OTP code: ${otp} Don't give it to others</h1>`,
-        )
+        try {
+            await sendMail(
+                user.email,
+                'OTP',
+                `<h1>This is your OTP code: ${otp}. Don't give it to others.</h1>`,
+            )
+        } catch (mailError) {
+            throw new Error(`Failed to send OTP email: ${mailError.message}`)
+        }
         const hashedPassword = await hashPassword(user.password)
         const newUser = await pool.query(
             `INSERT INTO users(
-                name,
-                email,
-                password,
-                role,
-                avatar,
-                username,
-                birth_of_date,
-                phone_number
-                ) VALUES (
-                    $1,$2,$3,
-                    $4,$5,$6,
-                    $7,$8 
-                    ) RETURNING *`,
+                name, email, password, role, avatar, username, birth_of_date, phone_number
+            ) VALUES (
+                $1, $2, $3, $4, $5, $6, $7, $8
+            ) RETURNING *`,
             [
                 user.name,
                 user.email,
@@ -60,19 +55,17 @@ export const registerUser = async (user) => {
         )
         await pool.query(
             `INSERT INTO otp_codes (
-                        user_id INT NOT NULL,
-                        otp_code VARCHAR,
-        
-                    ) VALUES($1,$2)`,
+                user_id, otp_code
+            ) VALUES($1, $2)`,
             [newUser.rows[0].id, otp],
         )
         return newUser.rows[0]
     } catch (error) {
-        logger.error(error)
-
-        return error
+        logger.error(`Error registering user: ${error.message}`)
+        throw new Error('Failed to register user')
     }
 }
+
 export const loginUser = async (user) => {
     try {
         const currentUser = await getUserByEmailService(user.email)
@@ -106,13 +99,7 @@ export const loginUser = async (user) => {
         return error
     }
 }
-// export const verifyUser = async (user) => {
-//     try {
 
-//     } catch (error) {
-//         return error
-//     }
-// }
 export const refreshAccessToken = async (user) => {
     try {
         if (!user.token) {
