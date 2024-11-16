@@ -1,6 +1,6 @@
-import { z } from 'zod'
-export const categoriesSchema = z.object({
-    name: z.string(),
-    description: z.string(),
-    tag: z.string(),
+import Joi from 'joi'
+export const categoriesSchema = Joi.object({
+    name: Joi.string().required(),
+    description: Joi.string().required(),
+    tag: Joi.string().required(),
 })

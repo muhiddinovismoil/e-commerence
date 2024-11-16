@@ -12,6 +12,8 @@ import {
     addressRouter,
     socialProfileRouter,
     authRouter,
+    categoryRouter,
+    productsRouter,
 } from './routes/index.js'
 
 const app = express()
@@ -22,8 +24,10 @@ app.use('/api/v1/users', userRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/address', addressRouter)
 app.use('/api/v1/socialprofile', socialProfileRouter)
+app.use('/api/v1/category', categoryRouter)
+app.use('/api/v1/products', productsRouter)
 
-app.use((err, req, res,next) => {
+app.use((err, req, res, next) => {
     if (err) {
         return res.send(err.message)
     }

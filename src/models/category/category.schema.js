@@ -5,7 +5,7 @@ export const creaetCategoryTable = async () => {
         await pool.query(
             `CREATE TABLE IF NOT EXISTS categories (
                 id SERIAL PRIMARY KEY,
-                name VARCHAR NOT NULL,
+                name VARCHAR UNIQUE NOT NULL,
                 description TEXT NOT NULL,
                 tag VARCHAR NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

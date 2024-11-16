@@ -1,6 +1,6 @@
-import { z } from 'zod'
-export const socialProfilesScheme = z.object({
-    user_id: z.number().int(),
-    platform: z.string().min(5),
-    platform_user: z.string().min(5),
+import Joi from 'joi'
+export const socialProfilesScheme = Joi.object({
+    user_id: Joi.number().integer().required(),
+    platform: Joi.string().min(5).required(),
+    platform_user: Joi.string().min(5).required(),
 })

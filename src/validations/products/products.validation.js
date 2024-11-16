@@ -1,12 +1,12 @@
-import { z } from 'zod'
-export const productsSchema = z.object({
-    category_id: z.number().int(),
-    title: z.string().min(6),
-    picture: z.string().optional(),
-    summary: z.string().min(5),
-    description: z.string(),
-    price: z.number(),
-    discount_type: z.string().optional(),
-    discount_value: z.number().optional(),
-    tags: z.string(),
+import Joi from 'joi'
+export const productsSchema = Joi.object({
+    category_id: Joi.number().integer().required(),
+    title: Joi.string().min(6).required(),
+    picture: Joi.string().optional(),
+    summary: Joi.string().min(5).required(),
+    description: Joi.string().required(),
+    price: Joi.number().required(),
+    discount_type: Joi.string().optional(),
+    discount_value: Joi.number().optional(),
+    tags: Joi.string().required(),
 })

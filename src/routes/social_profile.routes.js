@@ -6,12 +6,22 @@ import {
     updateProfile,
     deleteProfile,
 } from '../controllers/index.js'
-import { validateProfiles } from '../middlewares/index.js'
+import { validateProfiles, authGuard, roleGuard } from '../middlewares/index.js'
 
 export const socialProfileRouter = Router()
 
-socialProfileRouter.get('/', getAllProfiles)
-socialProfileRouter.get('/:id', getProfileById)
-socialProfileRouter.post('/', validateProfiles, createProfile)
-socialProfileRouter.put('/:id', updateProfile)
-socialProfileRouter.delete('/:id', deleteProfile)
+socialProfileRouter.get('/', authGuard, getAllProfiles)
+socialProfileRouter.get('/:id', authGuard, getProfileById)
+socialProfileRouter.post('/', authGuard, validateProfiles, createProfile)
+socialProfileRouter.put(
+    '/:id',
+    authGuard,
+    roleGuard('admin', 'moderator'),
+    updateProfile,
+)
+socialProfileRouter.delete(
+    '/:id',
+    authGuard,
+    roleGuard('admin', 'moderator'),
+    deleteProfile,
+)
