@@ -6,6 +6,11 @@ import {
     createSocialProfilesTable,
     creaetCategoryTable,
     createProductsTable,
+    createCartTables,
+    createCartItemTable,
+    createOrdersTable,
+    createReviewsTables,
+    createWishlistTable,
 } from './models/index.js'
 import {
     userRouter,
@@ -39,6 +44,11 @@ app.get('/api/v1/setup', async (req, res) => {
     await createSocialProfilesTable()
     await creaetCategoryTable()
     await createProductsTable()
+    await createCartTables()
+    await createCartItemTable()
+    await createOrdersTable()
+    await createReviewsTables()
+    await createWishlistTable()
     res.status(200).send({ msg: 'Tables are created Successfully' })
 })
 export default app
