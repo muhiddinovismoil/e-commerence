@@ -1,8 +1,15 @@
 import { Router } from 'express'
-import {} from '../middlewares/index.js'
+import {
+    getAllProductsController,
+    getProductByIdController,
+    createProductController,
+    updateProductController,
+    deleteProductController,
+} from '../controllers/index.js'
+import { validateProducts, authGuard, roleGuard } from '../middlewares/index.js'
 export const productsRouter = Router()
-productsRouter.get('/')
-productsRouter.get('/:id')
-productsRouter.post('/')
-productsRouter.put('/:id')
-productsRouter.delete('/:id')
+productsRouter.get('/', getAllProductsController)
+productsRouter.get('/:id', getProductByIdController)
+productsRouter.post('/', validateProducts, createProductController)
+productsRouter.put('/:id', updateProductController)
+productsRouter.delete('/:id', deleteProductController)

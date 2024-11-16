@@ -6,10 +6,29 @@ import {
     updateCategoryController,
     deleteCategoryController,
 } from '../controllers/index.js'
-import {} from '../middlewares/index.js'
+import {
+    validateCategories,
+    authGuard,
+    roleGuard,
+} from '../middlewares/index.js'
 export const categoryRouter = Router()
-categoryRouter.get('/', getAllCategoriesController)
-categoryRouter.get('/:id', getCategorieByIdController)
-categoryRouter.post('/', createCategoryController)
-categoryRouter.put('/:id', updateCategoryController)
-categoryRouter.delete('/:id', deleteCategoryController)
+categoryRouter.get('/', authGuard, getAllCategoriesController)
+categoryRouter.get('/:id', authGuard, getCategorieByIdController)
+categoryRouter.post(
+    '/',
+    authGuard,
+    validateCategories,
+    createCategoryController,
+)
+categoryRouter.put(
+    '/:id',
+    authGuard,
+    roleGuard('admin', 'moderator'),
+    updateCategoryController,
+)
+categoryRouter.delete(
+    '/:id',
+    authGuard,
+    roleGuard('admin', 'moderator'),
+    deleteCategoryController,
+)
