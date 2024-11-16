@@ -51,27 +51,31 @@ export async function createCartItemController(req, res, next) {
 }
 export async function updateCartItemController(req, res, next) {
     try {
-        logger.info()
+        logger.info(`Route: /api/v1/carts-item/${req.params.id} METHOD: PUT`)
         const updateData = await updateCartsItem(req.params.id, req.body)
         return res.status(200).send({
             msg: 'Updated',
             data: updateData,
         })
     } catch (error) {
-        logger.error()
+        logger.error(
+            `Route: /api/v1/carts-item/${req.params.id} METHOD: PUT,Error: ${error.message}`,
+        )
         next(error)
     }
 }
 export async function deleteCartItemController(req, res, next) {
     try {
-        logger.info()
+        logger.info(`Route: /api/v1/carts-item/${req.params.id} METHOD: DELETE`)
         const deleteData = await deleteCartsItem(req.params.id)
         return res.status(200).send({
             msg: 'DELETED',
             data: deleteData,
         })
     } catch (error) {
-        logger.error()
+        logger.error(
+            `Route: /api/v1/carts-item/${req.params.id} METHOD: DELETE,Error: ${error.message}`,
+        )
         next(error)
     }
 }

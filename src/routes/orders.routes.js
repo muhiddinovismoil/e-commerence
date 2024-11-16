@@ -3,13 +3,16 @@ import {
     getAllOrdersController,
     getOrderByIdController,
     createOrderController,
-    updateOrderByIdController,
     deleteOrderByIdController,
 } from '../controllers/index.js'
-import { validateOrders,authGuard,roleGuard } from '../middlewares/index.js'
+import { validateOrders, authGuard, roleGuard } from '../middlewares/index.js'
 export const orderRouter = Router()
-orderRouter.get('/', getAllOrdersController)
-orderRouter.get('/:id', getOrderByIdController)
-orderRouter.post('/', createOrderController)
-orderRouter.put('/:id', updateOrderByIdController)
-orderRouter.delete('/:id', deleteOrderByIdController)
+orderRouter.get('/', authGuard, getAllOrdersController)
+orderRouter.get('/:id', authGuard, getOrderByIdController)
+orderRouter.post('/', authGuard, validateOrders, createOrderController)
+orderRouter.delete(
+    '/:id',
+    authGuard,
+    roleGuard('admin', 'moderator'),
+    deleteOrderByIdController,
+)
