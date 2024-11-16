@@ -20,12 +20,12 @@ addressRouter.post(
 addressRouter.put(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     updateAddresses,
 )
 addressRouter.delete(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     deleteAddresses,
 )

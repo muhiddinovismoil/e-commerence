@@ -23,12 +23,12 @@ categoryRouter.post(
 categoryRouter.put(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     updateCategoryController,
 )
 categoryRouter.delete(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     deleteCategoryController,
 )

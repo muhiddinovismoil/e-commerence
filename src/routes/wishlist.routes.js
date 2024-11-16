@@ -13,6 +13,6 @@ wishlistRouter.post('/', authGuard, validateWishlist, addWishlistController)
 wishlistRouter.delete(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     deleteWishlistByIdController,
 )

@@ -16,12 +16,12 @@ socialProfileRouter.post('/', authGuard, validateProfiles, createProfile)
 socialProfileRouter.put(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     updateProfile,
 )
 socialProfileRouter.delete(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     deleteProfile,
 )

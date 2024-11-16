@@ -8,8 +8,18 @@ import {
 } from '../controllers/index.js'
 import { validateReviews, authGuard, roleGuard } from '../middlewares/index.js'
 export const reviewRouter = Router()
-reviewRouter.get('/', getAllReviewsController)
-reviewRouter.get('/:id', getReviewByIdController)
-reviewRouter.post('/', createReviewController)
-reviewRouter.put('/:id', updateReviewByIdController)
-reviewRouter.delete('/:id', deleteReviewByIdController)
+reviewRouter.get('/', authGuard, getAllReviewsController)
+reviewRouter.get('/:id', authGuard, getReviewByIdController)
+reviewRouter.post('/', authGuard, validateReviews, createReviewController)
+reviewRouter.put(
+    '/:id',
+    authGuard,
+    roleGuard('admin', 'manager'),
+    updateReviewByIdController,
+)
+reviewRouter.delete(
+    '/:id',
+    authGuard,
+    roleGuard('admin', 'manager'),
+    deleteReviewByIdController,
+)

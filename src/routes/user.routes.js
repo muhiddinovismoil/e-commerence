@@ -9,10 +9,10 @@ import { authGuard, roleGuard } from '../middlewares/index.js'
 export const userRouter = Router()
 userRouter.get('/', authGuard, getAllUsers)
 userRouter.get('/:id', authGuard, getOneUserById)
-userRouter.put('/:id', authGuard, roleGuard('admin', 'moderator'), updateUser)
+userRouter.put('/:id', authGuard, roleGuard('admin', 'manager'), updateUser)
 userRouter.delete(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     deleteUser,
 )

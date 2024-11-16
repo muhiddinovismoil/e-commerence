@@ -13,6 +13,6 @@ orderRouter.post('/', authGuard, validateOrders, createOrderController)
 orderRouter.delete(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     deleteOrderByIdController,
 )

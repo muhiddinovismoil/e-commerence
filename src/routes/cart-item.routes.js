@@ -14,12 +14,12 @@ cartsItemRouter.post('/', authGuard, validateCartItem, createCartItemController)
 cartsItemRouter.put(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     updateCartItemController,
 )
 cartsItemRouter.delete(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     deleteCartItemController,
 )

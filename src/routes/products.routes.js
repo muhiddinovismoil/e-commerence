@@ -14,12 +14,12 @@ productsRouter.post('/', authGuard, validateProducts, createProductController)
 productsRouter.put(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     updateProductController,
 )
 productsRouter.delete(
     '/:id',
     authGuard,
-    roleGuard('admin', 'moderator'),
+    roleGuard('admin', 'manager'),
     deleteProductController,
 )
