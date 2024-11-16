@@ -23,7 +23,24 @@ export async function getReviewsById(id) {
 }
 export async function createReviews(reviews) {
     try {
-        const data = await pool.query()
+        const data = await pool.query(
+            `INSERT INTO reviews(
+                user_id,
+                product_id,
+                rating,
+                comment
+            ) VALUES($1,$2,$3,$4) RETURNING *`,
+            [
+                reviews.user_id,
+                reviews.product_id,
+                reviews.rating,
+                reviews.comment,
+            ],
+        )
+        if (!data.rows[0]) {
+            throw new Error('Review not created with some reason')
+        }
+        return data.rows[0]
     } catch (error) {
         throw new Error(error)
     }
@@ -31,14 +48,32 @@ export async function createReviews(reviews) {
 export async function updateReviewsById(id, reviews) {
     try {
         const oldReview = await getReviewsById(id)
-        const data = await pool.query()
+        const data = await pool.query(
+            `UPDATE reviews SET rating=$1,comment=$2 WHERE id=$3 RETURNING *`,
+            [
+                reviews.rating || oldReview.rating,
+                reviews.comment || oldReview.comment,
+                id,
+            ],
+        )
+        if (!data.rows[0]) {
+            throw new Error('Reviews not updated with some reason')
+        }
+        return data.rows[0]
     } catch (error) {
         throw new Error(error)
     }
 }
 export async function deleteReviewsById(id) {
     try {
-        const data = await pool.query()
+        const data = await pool.query(
+            `DELETE FROM reviews WHERE id=$1 RETURNING *`,
+            [id],
+        )
+        if (!data.rows[0]) {
+            throw new Error('Orders not deleted with some reasons')
+        }
+        return data.rows[0]
     } catch (error) {
         throw new Error(error)
     }
